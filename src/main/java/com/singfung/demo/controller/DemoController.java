@@ -1,12 +1,12 @@
 package com.singfung.demo.controller;
 
+import com.singfung.demo.model.dto.AuthDTO;
 import com.singfung.demo.model.dto.SecurityQuestion;
 import com.singfung.demo.service.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,5 +32,9 @@ public class DemoController {
         return ResponseEntity.ok(questions);
     }
 
-
+    @PostMapping("/token")
+    public ResponseEntity<?> callVerifyTokenAPI(@RequestBody @Validated AuthDTO authDTO) {
+        String repsonse = demoService.verifyToken(authDTO.getUsernameOrEmail(), authDTO.getPassword());
+        return ResponseEntity.ok(repsonse);
+    }
 }
