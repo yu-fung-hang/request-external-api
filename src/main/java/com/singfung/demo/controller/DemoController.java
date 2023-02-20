@@ -32,6 +32,7 @@ public class DemoController {
         return ResponseEntity.ok(questions);
     }
 
+    // with token, plus request body
     @PostMapping("/token")
     public ResponseEntity<?> callVerifyTokenAPI(@RequestBody @Validated AuthDTO authDTO) {
         String repsonse = demoService.verifyToken(authDTO.getUsernameOrEmail(), authDTO.getPassword());
