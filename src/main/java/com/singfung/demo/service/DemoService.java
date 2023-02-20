@@ -1,6 +1,7 @@
 package com.singfung.demo.service;
 
 import com.singfung.demo.model.dto.SecurityQuestion;
+import com.singfung.demo.model.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -34,6 +35,16 @@ public class DemoService {
         String url = "http://localhost:9000/api/security-questions";
         SecurityQuestion[] result = restTemplate.getForObject(url, SecurityQuestion[].class);
         return Arrays.asList(result);
+    }
+
+    public UserDTO getUserById(Integer id) {
+        try {
+            String url = "http://localhost:9100/api/user/" + id;
+            UserDTO user = restTemplate.getForObject(url, UserDTO.class);
+            return user;
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
     }
 
     private String getLogInResponse(String usernameOrEmail, String password) {

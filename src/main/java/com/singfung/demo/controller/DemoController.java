@@ -2,6 +2,7 @@ package com.singfung.demo.controller;
 
 import com.singfung.demo.model.dto.AuthDTO;
 import com.singfung.demo.model.dto.SecurityQuestion;
+import com.singfung.demo.model.dto.UserDTO;
 import com.singfung.demo.service.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,5 +38,12 @@ public class DemoController {
     public ResponseEntity<?> callVerifyTokenAPI(@RequestBody @Validated AuthDTO authDTO) {
         String repsonse = demoService.verifyToken(authDTO.getUsernameOrEmail(), authDTO.getPassword());
         return ResponseEntity.ok(repsonse);
+    }
+
+    // single object, without token
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Integer id) {
+        UserDTO user = demoService.getUserById(id);
+        return ResponseEntity.ok(user);
     }
 }
