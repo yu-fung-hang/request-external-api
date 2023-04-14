@@ -46,4 +46,11 @@ public class DemoController {
         UserDTO user = demoService.getUserById(id);
         return ResponseEntity.ok(user);
     }
+
+    // get object with token, have to use exchange method
+    @GetMapping("/cognito")
+    public ResponseEntity<?> callCognitoAPI() {
+        String repsonse = demoService.testCognito();
+        return ResponseEntity.ok(repsonse);
+    }
 }
