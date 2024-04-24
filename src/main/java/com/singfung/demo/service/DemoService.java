@@ -1,5 +1,7 @@
 package com.singfung.demo.service;
 
+import com.singfung.demo.model.dto.ProcessRespBO;
+import com.singfung.demo.model.dto.SecureAccessRequest;
 import com.singfung.demo.model.dto.SecurityQuestion;
 import com.singfung.demo.model.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,5 +111,15 @@ public class DemoService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication failed");
         }
+    }
+
+    private ProcessRespBO sendWechatMiniPayRequest(SecureAccessRequest data) {
+        String url = "https://frontapi.ottpay.com:443/processV2";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Object> entity = new HttpEntity<Object>(data, headers);
+        ResponseEntity<ProcessRespBO> responseEntity = restTemplate.postForEntity(url, entity, ProcessRespBO.class, data);
+        return responseEntity.getBody();
     }
 }
